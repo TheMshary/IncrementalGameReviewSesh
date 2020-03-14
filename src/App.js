@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Components
+import UpgradeStore from "./UpgradeStore";
+
+class App extends Component {
+  state = {
+    currency: 0,
+    incrementValue: 1
+  };
+
+  addCurrency = () => {
+    const newCurrency = this.state.currency + this.state.incrementValue;
+    this.setState({ currency: newCurrency });
+  };
+
+  upgradeChanges = (cost, incrementValueMultiply) => {
+    const oldIncrementValue = this.state.incrementValue;
+    const currency = this.state.currency;
+    this.setState({
+      incrementValue: oldIncrementValue * incrementValueMultiply,
+      currency: currency - cost
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <button className="btn btn-success" onClick={this.addCurrency}>
+          Add {this.state.incrementValue}
+        </button>
+        <p>{this.state.currency}</p>
+        <UpgradeStore
+          currency={this.state.currency}
+          upgradeChanges={this.upgradeChanges}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
