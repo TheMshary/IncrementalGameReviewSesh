@@ -2,17 +2,17 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import { purchaseUpgrade } from "./redux/actions";
+import { purchasePerSecondUpgrade } from "./redux/actions";
 
 function UpgradeButton(props) {
   const upgrade = props.upgrade;
   return (
     <div>
       <button
-        className="btn btn-outline-primary"
-        onClick={() => props.purchaseUpgrade(upgrade)}
+        className="btn btn-outline-info"
+        onClick={() => props.purchasePerSecondUpgrade(upgrade)}
       >
-        x{upgrade.multiplier} Your Increment
+        +{upgrade.increase} currency/second
       </button>
     </div>
   );
@@ -20,7 +20,8 @@ function UpgradeButton(props) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    purchaseUpgrade: upgrade => dispatch(purchaseUpgrade(upgrade))
+    purchasePerSecondUpgrade: upgrade =>
+      dispatch(purchasePerSecondUpgrade(upgrade))
   };
 };
 

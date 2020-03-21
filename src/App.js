@@ -1,43 +1,43 @@
 import React, { Component } from "react";
 import "./App.css";
 
+import { connect } from "react-redux";
+
+import { incrementCurrency } from "./redux/actions";
+
 // Components
 import UpgradeStore from "./UpgradeStore";
 
 class App extends Component {
-  state = {
-    currency: 0,
-    incrementValue: 1
-  };
-
-  addCurrency = () => {
-    const newCurrency = this.state.currency + this.state.incrementValue;
-    this.setState({ currency: newCurrency });
-  };
-
-  upgradeChanges = (cost, incrementValueMultiply) => {
-    const oldIncrementValue = this.state.incrementValue;
-    const currency = this.state.currency;
-    this.setState({
-      incrementValue: oldIncrementValue * incrementValueMultiply,
-      currency: currency - cost
-    });
-  };
-
   render() {
     return (
       <div className="App">
-        <button className="btn btn-success" onClick={this.addCurrency}>
-          Add {this.state.incrementValue}
+        <button
+          className="btn btn-success"
+          onClick={this.props.incrementCurrency}
+        >
+          Add {this.props.incrementValue}
         </button>
-        <p>{this.state.currency}</p>
-        <UpgradeStore
-          currency={this.state.currency}
-          upgradeChanges={this.upgradeChanges}
-        />
+        <p>{this.props.currency}</p>
+        <p>{this.props.perSecondIncrement} currency/second</p>
+        <UpgradeStore currency={this.props.currency} />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    currency: state.currency,
+    incrementValue: state.incrementValue,
+    perSecondIncrement: state.perSecondIncrement
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    incrementCurrency: () => dispatch(incrementCurrency())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
