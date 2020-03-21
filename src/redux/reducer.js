@@ -9,7 +9,7 @@ import {
 import { upgrades, perSecondUpgrades } from "../upgradesData";
 
 const initialState = {
-  currency: 499,
+  currency: 0,
   incrementValue: 1,
   upgrades: upgrades,
   perSecondUpgrades: perSecondUpgrades,
